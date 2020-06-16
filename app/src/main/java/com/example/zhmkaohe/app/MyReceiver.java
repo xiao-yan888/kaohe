@@ -14,6 +14,7 @@ import com.example.zhmkaohe.util.SharedPreferencesUtils;
 public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        //接收更新广播
         if(intent.getAction().equals("cn.boc.mtms.CHECK_VERSION_COMPLETE")){
             boolean check_result = intent.getBooleanExtra("CHECK_RESULT", false);
             boolean update_flag = intent.getBooleanExtra("UPDATE_FLAG", false);
@@ -26,6 +27,7 @@ public class MyReceiver extends BroadcastReceiver {
             }else {
                 Log.i("MyTag", "onReceive: 没有获取到");
             }
+            //接收进入/退出更新广播
         }else if (intent.getAction().equals("cn.boc.mtms.UPDATE_STATUS")){
             boolean update_status = intent.getBooleanExtra("UPDATE_STATUS", true);
             String update_apps_list = intent.getStringExtra("UPDATE_APPS_LIST");
@@ -34,28 +36,12 @@ public class MyReceiver extends BroadcastReceiver {
                 SharedPreferencesUtils.setParam(context,"updatelist",update_apps_list);
             }*/
             if (update_status) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("进入更新应用");
-                builder.setCancelable(true);
-                //设置正面按钮
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Toast.makeText(context, "你点击了是的", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
-                //设置反面按钮
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Toast.makeText(context, "你点击了不是", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
+                SharedPreferencesUtils.setParam(context,"update_status",update_status);
+
             }
 
             Log.i("MyTag", update_apps_list);
+            //设备是否签到
         }else if (intent.getAction().equals("cn.boc.mtms.DEVICE_NO_SIGNIN")){
             Log.i("MyTag", "设备未签到");
             boolean equip = intent.getBooleanExtra("equip", true);

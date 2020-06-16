@@ -25,21 +25,17 @@ public class EquipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context context;
     private List<String> data;
     private List<String> list;
-    private final LayoutInflater inflater;
-    private ViewGroup.LayoutParams layoutParams;
-    private LinearLayout.LayoutParams layoutParams1;
 
     public EquipAdapter(Context context, List<String> data,List<String> list) {
         this.context = context;
         this.data = data;
         this.list = list;
-        inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.equip_item, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.equip_item, parent,false);
         EquipViewHolder equipViewHolder = new EquipViewHolder(view);
         return equipViewHolder;
     }

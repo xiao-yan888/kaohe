@@ -20,22 +20,22 @@ import com.example.zhmkaohe.bean.FirstInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeskTopAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DeskTopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private List<AppInfo> appInfos;
-    private final LayoutInflater inflater;
     private RelativeLayout.LayoutParams layoutParams1;
-    public DeskTopAdapter(List<AppInfo> appInfos,Context context){
-        this.appInfos=appInfos;
-        this.context=context;
-        inflater = LayoutInflater.from(context);
+
+    public DeskTopAdapter(List<AppInfo> appInfos, Context context) {
+        this.appInfos = appInfos;
+        this.context = context;
 
     }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.desktop_gridview_item, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.desktop_gridview_item, parent, false);
         DeskTopViewHolder deskTopViewHolder = new DeskTopViewHolder(view);
         return deskTopViewHolder;
     }
@@ -46,15 +46,15 @@ public class DeskTopAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolde
         DeskTopViewHolder deskTopViewHolder = (DeskTopViewHolder) holder;
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        int heightPixels = (metrics.heightPixels)*2/3;
+        int heightPixels = (metrics.heightPixels) * 2 / 3;
         layoutParams1 = (RelativeLayout.LayoutParams) deskTopViewHolder.ll_item.getLayoutParams();
-        layoutParams1.height=heightPixels/3;
+        layoutParams1.height = heightPixels / 3;
         deskTopViewHolder.ll_item.setLayoutParams(layoutParams1);
         deskTopViewHolder.iv.setImageDrawable(appInfos.get(position).getIco());
         deskTopViewHolder.tv.setText(appInfos.get(position).getName());
-        if (appInfos.get(position).getUpdate_flag()){
+        if (appInfos.get(position).getUpdate_flag()) {
             deskTopViewHolder.tv_geng.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             deskTopViewHolder.tv_geng.setVisibility(View.GONE);
         }
         deskTopViewHolder.ll_item.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,7 @@ public class DeskTopAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 if (intent != null) {
                     intent.putExtra("type", "110");
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                   context.startActivity(intent);
+                    context.startActivity(intent);
                 }
             }
         });
@@ -76,11 +76,12 @@ public class DeskTopAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return appInfos.size();
     }
 
-    class DeskTopViewHolder extends RecyclerView.ViewHolder{
+    class DeskTopViewHolder extends RecyclerView.ViewHolder {
         private final ImageView iv;
         private final TextView tv;
         private final TextView tv_geng;
         private final LinearLayout ll_item;
+
         public DeskTopViewHolder(@NonNull View itemView) {
             super(itemView);
             iv = itemView.findViewById(R.id.iv);

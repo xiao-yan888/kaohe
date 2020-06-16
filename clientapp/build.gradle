@@ -9,8 +9,8 @@ android {
         applicationId "com.example.clientapp"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -26,7 +26,7 @@ android {
 }
 greendao {
     //数据库的schema版本，也可以理解为数据库版本号
-    schemaVersion 2
+    schemaVersion 3
     //设置DaoMaster、DaoSession、Dao包名，也就是要放置这些类的包的全路径。
     daoPackage 'cn.hnshangyu.testgreendao.greendao'
     //设置DaoMaster、DaoSession、Dao目录

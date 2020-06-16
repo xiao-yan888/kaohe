@@ -1,7 +1,9 @@
 package com.example.zhmkaohe;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.vpager)
     ViewPager mVpager;
-    private List<Fragment> mFragmentList = new ArrayList<>();
     private FragmentAdapter fragmentAdapter;
     private int i;
     private LinearLayout mLl;
@@ -67,10 +68,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-     /*   Intent intent1 = new Intent("android.intent.action.PACKAGE_ADDED");
-        sendBroadcast(intent1);
-        Intent intent = new Intent("android.intent.action.PACKAGE_REMOVED");
-        sendBroadcast(intent);*/
         myReceiver = new MyReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.PACKAGE_ADDED"); //安装
@@ -100,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initview() {
+        //判断设备是否签到
         Boolean equi = (Boolean) SharedPreferencesUtils.getParam(this, "equi", false);
         // String updatelist = (String) SharedPreferencesUtils.getParam(this, "updatelist", "");
         if (equi) {
@@ -107,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             mTvEqu.setVisibility(View.GONE);
         }
+        //动态添加其他应用fragment页面
         List<AppInfo> appInfos = MyApp.GetAppList1(MainActivity.this);
         int size = appInfos.size();
         i = size / 6;
@@ -136,9 +135,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-       /* application = (MyApp) getApplication();
+        application = (MyApp) getApplication();
         application.init();
-        application.addActivity(this);*/
+        application.addActivity(this);
+        //Boolean clientlist = (Boolean) SharedPreferencesUtils.getParam(MainActivity.this, "clientlist", false);
+        sendapplist();
+
+        mTvEqu = (TextView) findViewById(R.id.tv_equ);
+        mTvEqu.setOnClickListener(this);
+        mApply = (TextView) findViewById(R.id.apply);
+        mApply.setOnClickListener(this);
+        mTvBeng = (TextView) findViewById(R.id.tv_beng);
+        mTvBeng.setOnClickListener(this);
+
+        showDialog();
+
+    }
+    //发送数据库中数据到客户端
+    private void sendapplist() {
         DaoSession daoSession = MyApp.getDaoSession();
         FirstInfoDao firstInfoDao = daoSession.getFirstInfoDao();
         AppInfoDao appInfoDao = daoSession.getAppInfoDao();
@@ -146,12 +160,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         List<AppInfo> list1 = appInfoDao.queryBuilder().build().list();
         ArrayList<String> date = new ArrayList<>();
         ArrayList<String> date1 = new ArrayList<>();
-        if (list.size()!=0) {
+        if (list.size() != 0) {
             for (int j = 0; j < list.size(); j++) {
                 date.add(list.get(j).getTitle() + "  " + list.get(j).getContent());
             }
         }
-        if (list1.size()!=0) {
+        if (list1.size() != 0) {
             for (int j = 0; j < list1.size(); j++) {
                 date1.add(list1.get(j).getName());
             }
@@ -161,12 +175,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putStringArrayListExtra("list1", date1);
         intent.setComponent(new ComponentName("com.example.clientapp", "com.example.clientapp.app.MyReceiver"));
         sendBroadcast(intent);
-        mTvEqu = (TextView) findViewById(R.id.tv_equ);
-        mTvEqu.setOnClickListener(this);
-        mApply = (TextView) findViewById(R.id.apply);
-        mApply.setOnClickListener(this);
-        mTvBeng = (TextView) findViewById(R.id.tv_beng);
-        mTvBeng.setOnClickListener(this);
+
+    }
+    //更新/进入Dialog
+    private void showDialog() {
+        Boolean update_status = (Boolean) SharedPreferencesUtils.getParam(this, "update_status", false);
+        if (update_status) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("进入更新应用");
+            builder.setCancelable(true);
+            //设置正面按钮
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //Toast.makeText(context, "你点击了是的", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+            //设置反面按钮
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Toast.makeText(context, "你点击了不是", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+
+        }
     }
 
     @Override
@@ -187,9 +223,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
     /**
-     * 人为制造的异常*/
-    public void press(){
+     * 人为制造的异常
+     */
+    public void press() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -197,6 +235,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }).start();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -206,9 +245,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public class FragmentAdapter extends FragmentPagerAdapter {
-        List<Fragment> fragmentList;
-
-
         FragmentAdapter(FragmentManager fm) {
             super(fm);
             notifyDataSetChanged();
@@ -230,12 +266,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 secondFragment.setArguments(bundle);
                 return secondFragment;
             }
-           /* Fragment fragment = mFragmentList.get(position);
-            Bundle bundle = new Bundle();
-            bundle.putInt("position", position);
-
-            fragment.setArguments(bundle);
-            return fragment;*/
         }
 
         @Override
@@ -243,10 +273,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return fragshu + 1;
         }
 
-      /*  @Override
-        public int getItemPosition(@NonNull Object object) {
-            return POSITION_NONE;
-        }*/
     }
 
 }

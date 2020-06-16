@@ -1,8 +1,5 @@
 package com.example.zhmkaohe;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +14,7 @@ import com.example.zhmkaohe.bean.AppInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+//展示设备安装应用列表
 public class ApplyActivity extends AppCompatActivity {
 
     private RecyclerView mRv;
@@ -42,7 +40,6 @@ public class ApplyActivity extends AppCompatActivity {
         mRv.setAdapter(applyAdapter);
 
     }
-
 
 
     private void initView() {

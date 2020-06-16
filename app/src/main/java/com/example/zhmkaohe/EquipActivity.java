@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.internal.Utils;
 
+//用aidl获取客户端的设备信息
 public class EquipActivity extends AppCompatActivity {
 
     private RecyclerView mRv;
@@ -46,7 +47,8 @@ public class EquipActivity extends AppCompatActivity {
         super.onDestroy();
         unbindService(serviceConnection);
     }
-    private Handler handler = new Handler(){
+
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
@@ -55,6 +57,7 @@ public class EquipActivity extends AppCompatActivity {
             }
         }
     };
+
     private void initView() {
         list.add("uscc");
         list.add("终端号");
@@ -66,23 +69,23 @@ public class EquipActivity extends AppCompatActivity {
         list.add("当前网络状态");
         mRv = (RecyclerView) findViewById(R.id.rv);
         //new EquipAdapter(this, date);
-      //  mRv.setAdapter(firstAdapter);
+        //  mRv.setAdapter(firstAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRv.setLayoutManager(linearLayoutManager);
-        Intent intent=new Intent();
+        Intent intent = new Intent();
         intent.setAction("com.example.clientapp.MyService");
         intent.setPackage("com.example.clientapp");
         boolean b = getApplicationContext().bindService(intent, serviceConnection, BIND_AUTO_CREATE);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
+                while (true) {
                     //等待取得mService
-                    if(null != iMyAidlInterface){
+                    if (null != iMyAidlInterface) {
                         //...
                         try {
                             infos = iMyAidlInterface.getInfos();
-                            Log.e("ssssssss", infos.size()+"");
+                            Log.e("ssssssss", infos.size() + "");
                             Message message = new Message();
                             message.what = 0;
                             handler.sendMessage(message);
@@ -99,10 +102,10 @@ public class EquipActivity extends AppCompatActivity {
 
         }).start();
 
-        Log.e("aaa",b+"");
+        Log.e("aaa", b + "");
     }
 
-  private ServiceConnection serviceConnection=  new ServiceConnection() {
+    private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             iMyAidlInterface = IMyAidlInterface.Stub.asInterface(iBinder);
@@ -112,7 +115,7 @@ public class EquipActivity extends AppCompatActivity {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            Log.e("xxxx","aaaa");
+            Log.e("xxxx", "aaaa");
         }
     };
 }

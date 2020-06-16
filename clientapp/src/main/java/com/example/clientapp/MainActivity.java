@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("CHECK_RESULT", true);
                 intent.putExtra("CHECK_FAIL_REASON", "");
                 intent.putExtra("UPDATE_FLAG", true);
-                intent.putExtra("UPDATE_APPS_LIST", "[{\"appName\":\"浏览器\",\"packName\":\"com.newland.payment\",\"version\":\"1.0.00\",\"forceUpdate\":false}]");
+                intent.putExtra("UPDATE_APPS_LIST", "[{\"appName\":\"爱奇艺\",\"packName\":\"com.newland.payment\",\"version\":\"1.0.00\",\"forceUpdate\":false}]");
                 intent.setComponent(new ComponentName("com.example.zhmkaohe", "com.example.zhmkaohe.app.MyReceiver"));
                 sendBroadcast(intent);
                 break;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent1 = new Intent("cn.boc.mtms.UPDATE_STATUS");
                 intent1.putExtra("UPDATE_STATUS", true);
                 intent1.putExtra("RESULT_CODE", "0");
-                intent1.putExtra("UPDATE_APPS_LIST", "[{\"appName\":\"浏览器\",\"packName\":\"com.newland.payment\",\"version\":\"1.0.00\",\"forceUpdate\":false}]");
+                intent1.putExtra("UPDATE_APPS_LIST", "[{\"appName\":\"爱奇艺\",\"packName\":\"com.newland.payment\",\"version\":\"1.0.00\",\"forceUpdate\":false}]");
                 intent1.setComponent(new ComponentName("com.example.zhmkaohe", "com.example.zhmkaohe.app.MyReceiver"));
                 sendBroadcast(intent1);
                 break;

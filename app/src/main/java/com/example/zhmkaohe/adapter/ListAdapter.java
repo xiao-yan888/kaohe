@@ -19,18 +19,16 @@ import java.util.List;
 public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<RequestData.ResultBean.DataBean> data;
-    private final LayoutInflater inflater;
 
     public ListAdapter(Context context, List<RequestData.ResultBean.DataBean> data) {
         this.context = context;
         this.data = data;
-        inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         ListViewHolder listViewHolder = new ListViewHolder(view);
         return listViewHolder;
     }
@@ -39,13 +37,13 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ListViewHolder listViewHolder = (ListViewHolder) holder;
         listViewHolder.tv_title.setText(data.get(position).getTitle());
-        if (data.get(position).getThumbnail_pic_s02()!=null){
+        if (data.get(position).getThumbnail_pic_s02() != null) {
             Glide.with(context).load(data.get(position).getThumbnail_pic_s02()).into(listViewHolder.img2);
         }
-        if (data.get(position).getThumbnail_pic_s()!=null){
+        if (data.get(position).getThumbnail_pic_s() != null) {
             Glide.with(context).load(data.get(position).getThumbnail_pic_s()).into(listViewHolder.img1);
         }
-        if (data.get(position).getThumbnail_pic_s03()!=null){
+        if (data.get(position).getThumbnail_pic_s03() != null) {
             Glide.with(context).load(data.get(position).getThumbnail_pic_s03()).into(listViewHolder.img3);
         }
 
@@ -55,7 +53,8 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemCount() {
         return data.size();
     }
-    class ListViewHolder extends RecyclerView.ViewHolder{
+
+    class ListViewHolder extends RecyclerView.ViewHolder {
         private final TextView tv_title;
         private final ImageView img1;
         private final ImageView img2;

@@ -27,21 +27,17 @@ import static android.support.v7.widget.RecyclerView.NO_POSITION;
 public class FirstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<FirstInfo> data;
-    private final LayoutInflater inflater;
-    private ViewGroup.LayoutParams layoutParams;
     private LinearLayout.LayoutParams layoutParams1;
-    private View view;
 
     public FirstAdapter(Context context, List<FirstInfo> data) {
         this.context = context;
         this.data = data;
-        inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = inflater.inflate(R.layout.conduct_item, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.conduct_item, parent, false);
         FirstViewHolder firstViewHolder = new FirstViewHolder(view);
         return firstViewHolder;
     }
@@ -54,24 +50,11 @@ public class FirstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         firstViewHolder.tv_title.setText(firstInfo.getTitle());
         firstViewHolder.tv_content.setText(firstInfo.getContent());
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        int heightPixels = (metrics.heightPixels)*2/3;
+        int heightPixels = (metrics.heightPixels) * 2 / 3;
         layoutParams1 = (LinearLayout.LayoutParams) firstViewHolder.ll_item.getLayoutParams();
-        layoutParams1.height=heightPixels/3;
+        layoutParams1.height = heightPixels / 3;
         firstViewHolder.ll_item.setLayoutParams(layoutParams1);
-       // int adapterPosition = firstViewHolder.getAdapterPosition();
-       /* if (position==0) {
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            int widthPixels = metrics.widthPixels;
-            layoutParams1 = (LinearLayout.LayoutParams) firstViewHolder.ll_item.getLayoutParams();
-            layoutParams1.width=widthPixels/3;
-            firstViewHolder.ll_item.setLayoutParams(layoutParams1);
-        }else if (position==1){
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            int widthPixels = metrics.widthPixels;
-            layoutParams1 = (LinearLayout.LayoutParams) firstViewHolder.ll_item.getLayoutParams();
-            layoutParams1.width=widthPixels*2/3;
-            firstViewHolder.ll_item.setLayoutParams(layoutParams1);
-        }*/
+
         firstViewHolder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,15 +63,15 @@ public class FirstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         });
         //firstViewHolder.ll_item.setLayoutParams(layoutParams1);
-        if (position==0){
+        if (firstInfo.getType() == 1) {
             firstViewHolder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.fback1));
-        }else if (position==1){
+        } else if (firstInfo.getType() == 2) {
             firstViewHolder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.fback2));
-        }else if (position==2){
+        } else if (firstInfo.getType() == 3) {
             firstViewHolder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.fback3));
-        }else if (position==3){
+        } else if (firstInfo.getType() == 4) {
             firstViewHolder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.fback4));
-        }else if (position==4){
+        } else if (firstInfo.getType() == 5) {
             firstViewHolder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.fback5));
         }
     }
@@ -98,10 +81,12 @@ public class FirstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemCount() {
         return data.size();
     }
-    class FirstViewHolder extends RecyclerView.ViewHolder{
+
+    class FirstViewHolder extends RecyclerView.ViewHolder {
         private final TextView tv_title;
         private final TextView tv_content;
         private final LinearLayout ll_item;
+
         public FirstViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_title = itemView.findViewById(R.id.tv_title);

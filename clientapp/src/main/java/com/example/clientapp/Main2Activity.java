@@ -24,26 +24,7 @@ import cn.hnshangyu.testgreendao.greendao.DataInfoDao;
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
 
-    /**
-     * 增
-     */
-    private Button mBtZeng;
-    /**
-     * 删
-     */
-    private Button mBtShan;
-    /**
-     * 改
-     */
-    private Button mBtGai;
-    /**
-     * 查
-     */
-    private Button mBtCha;
-    /**
-     * 收到货
-     */
-    private TextView mTv;
+
     private RecyclerView mRv;
     private DataInfoDao dataInfoDao;
     /**
@@ -103,9 +84,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         mUpdate.setOnClickListener(this);
         mAll = (Button) findViewById(R.id.all);
         mAll.setOnClickListener(this);
-        mTv = (TextView) findViewById(R.id.tv);
-    }
 
+    }
 
 
     private void showdata(List<DataInfo> list) {
@@ -149,35 +129,45 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
         List<DataInfo> list = dataInfoDao.queryBuilder().build().list();
 
-        for(int i=0;i<list.size();i++){
+        for (int i = 0; i < list.size(); i++) {
             Long id1 = list.get(i).getId();
-            Log.d("aa", "select: "+id1);
+            Log.d("aa", "select: " + id1);
 
-            if(ids==id1){
+            if (ids == id1) {
                 //重新或许一遍值
                 String s = mName.getText().toString();
                 if (s.isEmpty()) {
                     Toast.makeText(Main2Activity.this, "不能为空", Toast.LENGTH_SHORT).show();
-                }else {
-                    DataInfo dataInfo = new DataInfo(ids, s,"21","女","sd");
+                } else {
+                    DataInfo dataInfo = new DataInfo(ids, s, "21", "女", "sd","1","2","3","4","5");
                     dataInfoDao.update(dataInfo);
                     Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
                 }
-            }else{
-                Toast.makeText(Main2Activity.this,"空的",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(Main2Activity.this, "空的", Toast.LENGTH_SHORT).show();
             }
         }
         cha();
 
     }
+
     //删除
     private void shachu() {
         //获取id值
         String id = mEdit.getText().toString().trim();
-        dataInfoDao.queryBuilder().where(DataInfoDao.Properties.Id.eq(id)).buildDelete().executeDeleteWithoutDetachingEntities();
-        Toast.makeText(this, "删除成功~", Toast.LENGTH_SHORT).show();
+        int a = Integer.parseInt(id);
+        List<DataInfo> list = dataInfoDao.queryBuilder().build().list();
+        for (int i = 0; i <list.size() ; i++) {
+            if (a==i+1){
+                dataInfoDao.delete(list.get(i));
+                Toast.makeText(this, "删除成功~", Toast.LENGTH_SHORT).show();
+            }
+        }
+        //dataInfoDao.queryBuilder().where(DataInfoDao.Properties.Id.eq(id)).buildDelete().executeDeleteWithoutDetachingEntities();
+
         cha();
     }
+
     public void insert() {
         String name = mName.getText().toString();
         //判断非空
@@ -185,24 +175,24 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(Main2Activity.this, "不能为空", Toast.LENGTH_SHORT).show();
         } else {
             //添加
-            DataInfo dataInfo = new DataInfo(null, name,"21","女","sd");
+            DataInfo dataInfo = new DataInfo(null, name, "21", "女", "sd","1","2","3","4","5");
             dataInfoDao.insert(dataInfo);
             //查询的方法
             cha();
         }
     }
-        //查询并添加到适配器当中展示
-        private void cha () {
-            List<DataInfo> list = dataInfoDao.queryBuilder().build().list();
-            showdata(list);
 
-        }
-        //全部删除
-        private void all () {
+    //查询并添加到适配器当中展示
+    private void cha() {
+        List<DataInfo> list = dataInfoDao.queryBuilder().build().list();
+        showdata(list);
 
-            dataInfoDao.deleteAll();
+    }
 
-            cha();
-        }
+    //全部删除
+    private void all() {
+        dataInfoDao.deleteAll();
+        cha();
+    }
 
 }

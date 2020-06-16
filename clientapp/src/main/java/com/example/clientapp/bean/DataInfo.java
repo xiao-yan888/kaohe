@@ -7,20 +7,31 @@ import org.greenrobot.greendao.annotation.Generated;
 
 @Entity(nameInDb = "t_data")
 public class DataInfo {
-    @Id
+    @Id(autoincrement = true)
     private Long id;
     @Property
     private String name;
     private String age;
     private String sex;
     private String content;
-    @Generated(hash = 2081879932)
-    public DataInfo(Long id, String name, String age, String sex, String content) {
+    private String fuo;
+    private String fut;
+    private String fus;
+    private String fuf;
+    private String fufi;
+    @Generated(hash = 848058640)
+    public DataInfo(Long id, String name, String age, String sex, String content,
+            String fuo, String fut, String fus, String fuf, String fufi) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.sex = sex;
         this.content = content;
+        this.fuo = fuo;
+        this.fut = fut;
+        this.fus = fus;
+        this.fuf = fuf;
+        this.fufi = fufi;
     }
 
     public DataInfo(String name) {
@@ -65,6 +76,46 @@ public class DataInfo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getFuo() {
+        return this.fuo;
+    }
+
+    public void setFuo(String fuo) {
+        this.fuo = fuo;
+    }
+
+    public String getFut() {
+        return this.fut;
+    }
+
+    public void setFut(String fut) {
+        this.fut = fut;
+    }
+
+    public String getFus() {
+        return this.fus;
+    }
+
+    public void setFus(String fus) {
+        this.fus = fus;
+    }
+
+    public String getFuf() {
+        return this.fuf;
+    }
+
+    public void setFuf(String fuf) {
+        this.fuf = fuf;
+    }
+
+    public String getFufi() {
+        return this.fufi;
+    }
+
+    public void setFufi(String fufi) {
+        this.fufi = fufi;
     }
 
 }

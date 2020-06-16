@@ -4,30 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Main3Activity"
     android:layout_marginLeft="10dp"
-    android:layout_marginTop="20dp">
+    android:layout_marginTop="20dp"
+    android:orientation="vertical"
+    tools:context=".Main3Activity">
+
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="桌面首页列表"
-    android:textSize="20dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="桌面首页列表"
+        android:textSize="20dp" />
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_zhuo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_zhuo"
         android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="桌面其他列表"
-        android:textSize="20dp"/>
+        android:textSize="20dp" />
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_qi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_qi"
         android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

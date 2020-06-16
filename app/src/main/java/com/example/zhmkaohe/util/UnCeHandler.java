@@ -17,7 +17,7 @@ public class UnCeHandler implements Thread.UncaughtExceptionHandler {
     public static final String TAG = "CatchExcep";
     MyApp application;
 
-    public UnCeHandler(MyApp application){
+    public UnCeHandler(MyApp application) {
         //获取系统默认的UncaughtException处理器
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         this.application = application;
@@ -25,22 +25,22 @@ public class UnCeHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        if(!handleException(ex) && mDefaultHandler != null){
+        if (!handleException(ex) && mDefaultHandler != null) {
             //如果用户没有处理则让系统默认的异常处理器来处理
             mDefaultHandler.uncaughtException(thread, ex);
-        }else{
-            try{
-                Thread.sleep(2000);
-            }catch (InterruptedException e){
+        } else {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
                 Log.e(TAG, "error : ", e);
             }
             Intent intent = new Intent(application.getApplicationContext(), MainActivity.class);
-             @SuppressLint("WrongConstant") PendingIntent restartIntent = PendingIntent.getActivity(
+            @SuppressLint("WrongConstant") PendingIntent restartIntent = PendingIntent.getActivity(
                     application.getApplicationContext(), 0, intent,
                     Intent.FLAG_ACTIVITY_NEW_TASK);
             //退出程序
-            AlarmManager mgr = (AlarmManager)application.getSystemService(Context.ALARM_SERVICE);
-            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
+            AlarmManager mgr = (AlarmManager) application.getSystemService(Context.ALARM_SERVICE);
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis(),
                     restartIntent); // 1秒钟后重启应用
             application.finishActivity();
         }
@@ -57,7 +57,7 @@ public class UnCeHandler implements Thread.UncaughtExceptionHandler {
             return false;
         }
         //使用Toast来显示异常信息
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 Looper.prepare();

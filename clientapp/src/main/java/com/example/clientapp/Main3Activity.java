@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
+//桌面应用的数据库数据列表展示
 public class Main3Activity extends AppCompatActivity {
 
     private RecyclerView mRvZhuo;

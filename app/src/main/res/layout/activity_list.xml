@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ListActivity">
 
     <TextView
+        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
+        android:layout_gravity="center"
         android:text="展示数据"
-        android:textSize="40dp"
-        android:id="@+id/tv"
-        android:layout_gravity="center"/>
+        android:textSize="40dp" />
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rv"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>

@@ -21,6 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+//其他页面展示数据
 public class ListActivity extends AppCompatActivity {
 
     private RecyclerView mRv;
@@ -89,9 +90,6 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        application = (MyApp) getApplication();
-        application.init();
-        application.addActivity(this);
         mRv = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRv.setLayoutManager(linearLayoutManager);

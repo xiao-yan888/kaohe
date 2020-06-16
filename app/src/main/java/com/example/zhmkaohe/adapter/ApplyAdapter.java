@@ -21,20 +21,16 @@ import androidx.recyclerview.widget.RecyclerView;*/
 public class ApplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<AppInfo> list;
-    private final LayoutInflater inflater;
-    private ViewGroup.LayoutParams layoutParams;
-    private LinearLayout.LayoutParams layoutParams1;
 
-    public ApplyAdapter(Context context,  List<AppInfo> list) {
+    public ApplyAdapter(Context context, List<AppInfo> list) {
         this.context = context;
         this.list = list;
-        inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.equip_item, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.equip_item, parent, false);
         ApplyViewHolder applyViewHolder = new ApplyViewHolder(view);
         return applyViewHolder;
     }
@@ -53,10 +49,12 @@ public class ApplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemCount() {
         return list.size();
     }
-    class ApplyViewHolder extends RecyclerView.ViewHolder{
+
+    class ApplyViewHolder extends RecyclerView.ViewHolder {
         private final TextView tv_title;
         private final TextView tv_content;
         private final RelativeLayout ll_item;
+
         public ApplyViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_title = itemView.findViewById(R.id.tv_title);

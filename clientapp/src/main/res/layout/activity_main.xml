@@ -4,43 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/bt_geng"
-        android:text="更新"
-        android:layout_marginTop="10dp"
-        />
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bt_jin"
-        android:text="进入/退出"
         android:layout_marginTop="10dp"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bt_qian"
-        android:text="签到"
-        android:layout_marginTop="10dp"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bt_green"
-        android:text="数据库"
-        android:layout_marginTop="10dp"
-        />
+        android:text="更新" />
 
     <Button
+        android:id="@+id/bt_jin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bt_list"
-        android:text="应用列表"
         android:layout_marginTop="10dp"
-        />
+        android:text="进入/退出" />
+
+    <Button
+        android:id="@+id/bt_qian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="签到" />
+
+    <Button
+        android:id="@+id/bt_green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="数据库" />
+
+    <Button
+        android:id="@+id/bt_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="应用列表" />
 </LinearLayout>

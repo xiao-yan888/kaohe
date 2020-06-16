@@ -16,10 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
-import com.example.zhmkaohe.DragGridView;
 import com.example.zhmkaohe.R;
 import com.example.zhmkaohe.adapter.DeskTopAdapter;
 
@@ -30,8 +27,6 @@ import com.example.zhmkaohe.bean.AppList;
 import com.example.zhmkaohe.bean.FirstInfo;
 import com.example.zhmkaohe.util.SharedPreferencesUtils;
 
-import org.greenrobot.greendao.Property;
-import org.greenrobot.greendao.query.QueryBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,9 +41,8 @@ import cn.hnshangyu.testgreendao.greendao.DaoSession;
 public class SecondFragment extends Fragment {
 
     private List<AppInfo> appInfos;
-    private List<AppInfo> Infos=new ArrayList<>();
-    private List<AppInfo> applist=new ArrayList<>();
-    //private DragGridView mGridView;
+    private List<AppInfo> Infos = new ArrayList<>();
+    private List<AppInfo> applist = new ArrayList<>();
     private RecyclerView mGridView;
     private int pos;
     private DeskTopAdapter deskTopAdapter;
@@ -86,19 +80,20 @@ public class SecondFragment extends Fragment {
 
     }
 
-    public List<AppList> getList(String json){
+    public List<AppList> getList(String json) {
         List<AppList> lists = new ArrayList<>();
         try {
             JSONArray jsonArray = new JSONArray(json);
-            for (int i = 0; i <jsonArray.length() ; i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                if (jsonObject!=null){
+                if (jsonObject != null) {
                     String appName = jsonObject.optString("appName");
                     String packName = jsonObject.optString("packName");
                     String version = jsonObject.optString("version");
                     Boolean forceUpdate = jsonObject.optBoolean("forceUpdate");
-                    AppList appList = new AppList(appName,packName,version,forceUpdate);
+                    AppList appList = new AppList(appName, packName, version, forceUpdate);
                     lists.add(appList);
+
                 }
             }
         } catch (JSONException e) {
@@ -108,30 +103,31 @@ public class SecondFragment extends Fragment {
         return lists;
     }
 
+    //初始化数据 添加数据库 展示
     private void initAppList() {
-       // GridView mGridView = getActivity().findViewById(R.id.mgv);
+        // GridView mGridView = getActivity().findViewById(R.id.mgv);
         list1 = appInfoDao.queryBuilder().orderAsc(AppInfoDao.Properties.Type).list();
         //List<AppInfo> list = appInfoDao.queryBuilder().orderAsc(AppInfoDao.Properties.Type).list();
-        Log.e("sss", list1.size()+"");
+        Log.e("sss", list1.size() + "");
         appInfos = MyApp.GetAppList1(getContext());
-        for (int i = 0; i <appInfos.size() ; i++) {
+        for (int i = 0; i < appInfos.size(); i++) {
             appInfos.get(i).setType(i);
         }
-        if (list1.size()==0) {
+        if (list1.size() == 0) {
 
             Log.e("aaaaaaaa", appInfos.toString());
-            for (int i = 0; i <appInfos.size() ; i++) {
+            for (int i = 0; i < appInfos.size(); i++) {
                 appInfoDao.insert(appInfos.get(i));
             }
             initdata(appInfos);
-        }else {
+        } else {
             applist.clear();
-            for (int i = 0; i < list1.size() ; i++) {
+            for (int i = 0; i < list1.size(); i++) {
                 AppInfo appInfo1 = new AppInfo();
                 appInfo1.setType(list1.get(i).getType());
                 appInfo1.setName(list1.get(i).getName());
-                for (int j = 0; j <appInfos.size() ; j++) {
-                    if (list1.get(i).getName().equals(appInfos.get(j).getName())){
+                for (int j = 0; j < appInfos.size(); j++) {
+                    if (list1.get(i).getName().equals(appInfos.get(j).getName())) {
                         //AppInfo appInfo = appInfos.get(j);
                         appInfo1.setIco(appInfos.get(j).getIco());
 
@@ -144,9 +140,9 @@ public class SecondFragment extends Fragment {
         }
 
 
-
     }
 
+    //展示数据列表
     private void initdata(List<AppInfo> appInfos) {
         Infos.clear();
         for (int i = (pos - 1) * 6; i < (pos - 1) * 6 + 6; i++) {
@@ -155,7 +151,7 @@ public class SecondFragment extends Fragment {
             }
         }
 
-        Log.e("dddddd",Infos.size()+"");
+        Log.e("dddddd", Infos.size() + "");
         if (update_flag) {
             List<AppList> list = getList(update_apps_list);
             for (int i = 0; i < list.size(); i++) {
@@ -174,12 +170,13 @@ public class SecondFragment extends Fragment {
         new ItemTouchHelper(mCallback).attachToRecyclerView(mGridView);
 
 
-
     }
 
+    //拖拽排序 刷新数据库
     ItemTouchHelper.Callback mCallback = new ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP|ItemTouchHelper.DOWN|ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT,0) {
+            ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, 0) {
         //drag方向，长按振动后可以拖动0//swip方向，实现滑动删除
+
         /**
          * @param recyclerView
          * @param viewHolder 拖动的ViewHolder
@@ -202,18 +199,12 @@ public class SecondFragment extends Fragment {
             }
 
             List<AppInfo> list = appInfoDao.queryBuilder().build().list();
-            Log.e("aaaa",list.size()+"");
-          /*  int a =(pos - 1) * 6+toPosition;
-           int b =  (pos - 1) * 6+fromPosition;
-            int type1 = appInfos.get((pos - 1) * 6 + toPosition).getType();*/
-            list1.get((pos - 1) * 6+toPosition).setType((pos - 1) * 6+fromPosition);
-          /*  int type = appInfos.get((pos - 1) * 6 + toPosition).getType();
-            int type2 = appInfos.get((pos - 1) * 6 + fromPosition).getType();*/
-            list1.get((pos - 1) * 6+fromPosition).setType((pos - 1) * 6+toPosition);
-           // int type3 = appInfos.get((pos - 1) * 6 + fromPosition).getType();
+            Log.e("aaaa", list.size() + "");
+            list1.get((pos - 1) * 6 + toPosition).setType((pos - 1) * 6 + fromPosition);
+            list1.get((pos - 1) * 6 + fromPosition).setType((pos - 1) * 6 + toPosition);
             appInfoDao.updateInTx(list1);
             List<AppInfo> list1 = appInfoDao.queryBuilder().build().list();
-            Log.e("aaaaaa",list1.size()+"");
+            Log.e("aaaaaa", list1.size() + "");
             //deskTopAdapter.notifyDataSetChanged();
             deskTopAdapter.notifyItemMoved(fromPosition, toPosition);
 
@@ -229,8 +220,6 @@ public class SecondFragment extends Fragment {
         }
 
     };
-
-
 
 
 }
