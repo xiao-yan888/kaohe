@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.vpager)
     ViewPager mVpager;
     private FragmentAdapter fragmentAdapter;
-    private int i;
+    private  int i;
     private LinearLayout mLl;
-    private int fragshu;
+    private  int fragshu;
     /**
      * 设备
      */
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //发送安装 卸载应用广播
         myReceiver = new MyReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.PACKAGE_ADDED"); //安装
@@ -77,11 +78,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initView();
         mLl = (LinearLayout) findViewById(R.id.ll);
+        //沉浸式状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+        //设置列表上边布局占总屏幕的1/3
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int heightPixels = metrics.heightPixels;
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mLl.getLayoutParams();
@@ -101,12 +104,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Boolean equi = (Boolean) SharedPreferencesUtils.getParam(this, "equi", false);
         // String updatelist = (String) SharedPreferencesUtils.getParam(this, "updatelist", "");
         if (equi) {
+            //true 显示设备按钮
             mTvEqu.setVisibility(View.VISIBLE);
         } else {
+            //false 隐藏设备按钮
             mTvEqu.setVisibility(View.GONE);
         }
         //动态添加其他应用fragment页面
         List<AppInfo> appInfos = MyApp.GetAppList1(MainActivity.this);
+        //一共显示多少fragment页面
         int size = appInfos.size();
         i = size / 6;
         if (i * 6 == size) {
@@ -114,8 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             fragshu = i + 1;
         }
+        //添加fragment显示
         fragmentAdapter = new FragmentAdapter(this.getSupportFragmentManager());
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -133,12 +139,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         fragmentAdapter.notifyDataSetChanged();
     }
-
+    //初始化
     private void initView() {
+        //崩溃之后重启机制
         application = (MyApp) getApplication();
         application.init();
         application.addActivity(this);
         //Boolean clientlist = (Boolean) SharedPreferencesUtils.getParam(MainActivity.this, "clientlist", false);
+        //发送数据库中数据到客户端显示
         sendapplist();
 
         mTvEqu = (TextView) findViewById(R.id.tv_equ);
@@ -147,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mApply.setOnClickListener(this);
         mTvBeng = (TextView) findViewById(R.id.tv_beng);
         mTvBeng.setOnClickListener(this);
-
+        //是否进入/退出显示dialog
         showDialog();
 
     }
@@ -170,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 date1.add(list1.get(j).getName());
             }
         }
+        //发送广播传递数据
         Intent intent = new Intent("cn.boc.mtms.CHECK");
         intent.putStringArrayListExtra("list", date);
         intent.putStringArrayListExtra("list1", date1);
@@ -180,7 +189,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //更新/进入Dialog
     private void showDialog() {
         Boolean update_status = (Boolean) SharedPreferencesUtils.getParam(this, "update_status", false);
+        //是否进入更新应用
         if (update_status) {
+            //进入
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage("进入更新应用");
             builder.setCancelable(true);
@@ -211,14 +222,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
             case R.id.tv_equ:
+                //点击进入设备页面
                 Intent intent = new Intent(this, EquipActivity.class);
                 startActivity(intent);
                 break;
             case R.id.apply:
+                //点击进入应用列表显示页面
                 Intent intent1 = new Intent(this, ApplyActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.tv_beng:
+                //人为伪造的崩溃机制
                 press();
                 break;
         }
@@ -243,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             unregisterReceiver(myReceiver);
         }
     }
-
+    //显示fragment adapter
     public class FragmentAdapter extends FragmentPagerAdapter {
         FragmentAdapter(FragmentManager fm) {
             super(fm);
@@ -256,9 +270,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Log.e("sdsadsd", i + "");
             if (position == 0) {
+                //首页页面
                 FirstFragment firstFragment = new FirstFragment();
                 return firstFragment;
             } else {
+                //其他应用页面
                 SecondFragment secondFragment = new SecondFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("position", position);

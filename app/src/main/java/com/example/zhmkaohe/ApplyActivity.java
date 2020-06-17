@@ -32,6 +32,7 @@ public class ApplyActivity extends AppCompatActivity {
     }
 
     private void initview() {
+        //展示数据列表
         List<AppInfo> appInfos = MyApp.GetAppList1(ApplyActivity.this);
         Log.e("wwww", appInfos.size() + "");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

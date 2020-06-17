@@ -62,7 +62,7 @@ public class MyApp extends Application {
         return daoSession;
     }
 
-
+    //获取桌面应用
     public static List<AppInfo> GetAppList1(Context context) {
         List<AppInfo> list = new ArrayList<>();
         PackageManager pm = context.getPackageManager();

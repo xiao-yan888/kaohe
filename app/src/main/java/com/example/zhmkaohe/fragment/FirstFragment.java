@@ -46,6 +46,7 @@ public class FirstFragment extends Fragment {
         mRv = inflate.findViewById(R.id.rv);
         daoSession = MyApp.getDaoSession();
         firstInfoDao = daoSession.getFirstInfoDao();
+        //初始化数据
         initview();
         // initdata();
         return inflate;
@@ -54,9 +55,11 @@ public class FirstFragment extends Fragment {
     //展示数据列表
     private void initdata(final List<FirstInfo> date) {
         //SharedPreferencesUtils.setParam(getContext(),"clientlist",true);
+        //展示列表adapter
         firstAdapter = new FirstAdapter(getContext(), date);
         mRv.setAdapter(firstAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(), 6);
+        //显示首页页面布局显示 第一行是2:1 第二行独占一行 第三行1:1
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -78,6 +81,7 @@ public class FirstFragment extends Fragment {
             }
         });
         mRv.setLayoutManager(gridLayoutManager);
+        //拖拽排序刷新列表
         new ItemTouchHelper(mCallback).attachToRecyclerView(mRv);
 
 
@@ -109,9 +113,8 @@ public class FirstFragment extends Fragment {
                 }
             }
             //firstInfos.clear();
+            //排序之后删除数据库重新添加
             firstInfoDao.deleteAll();
-            List<FirstInfo> list2 = firstInfoDao.queryBuilder().build().list();
-            Log.e("eeeee", list2.size() + "");
             Infos.clear();
             for (int i = 0; i < list.size(); i++) {
                 FirstInfo info = new FirstInfo();
@@ -120,10 +123,9 @@ public class FirstFragment extends Fragment {
                 info.setType(list.get(i).getType());
                 Infos.add(info);
             }
+            //添加数据库
             firstInfoDao.insertInTx(Infos);
-            // daoSession.clear();
-            List<FirstInfo> list1 = firstInfoDao.queryBuilder().build().list();
-            Log.e("eeeeeeee", list1.size() + "");
+            //刷新列表
             firstAdapter.notifyItemMoved(fromPosition, toPosition);
             //返回true表示执行拖动
             return true;
@@ -142,8 +144,10 @@ public class FirstFragment extends Fragment {
     //初始化数据 添加数据库
     private void initview() {
         //firstInfoDao.deleteAll();
+        //查询数据库数据
         firstInfos = firstInfoDao.queryBuilder().build().list();
         if (firstInfos.size() == 0) {
+            //数据为0 初始化数据
             FirstInfo firstInfo = new FirstInfo();
             firstInfo.setTitle("优惠券");
             firstInfo.setContent("精彩享不停");
@@ -170,11 +174,14 @@ public class FirstFragment extends Fragment {
             list.add(firstInfo3);
             list.add(firstInfo4);
             // daoUtil.insertMultInfo(this.list);
+            //添加数据库
             for (int i = 0; i < list.size(); i++) {
                 firstInfoDao.insert(list.get(i));
             }
+            //展示列表
             initdata(list);
         } else {
+            // 不等于0 直接显示数据库列表
             list = firstInfos;
             initdata(list);
         }

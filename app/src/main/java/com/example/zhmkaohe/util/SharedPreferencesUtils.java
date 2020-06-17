@@ -80,7 +80,7 @@ public class SharedPreferencesUtils {
 		
 		return null;
 	}
-
+	//删除数据
 	public static void clear(Context context){
 		SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
 		sp.edit().clear().commit();

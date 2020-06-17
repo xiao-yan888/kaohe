@@ -33,20 +33,25 @@ public class Main3Activity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        //获取应用桌面传过来的值并显示
         SharedPreferences sp = getSharedPreferences("share", Context.MODE_PRIVATE);
         String data = sp.getString("data", "");
         String data1 = sp.getString("data1", "");
         Gson gson = new Gson();
-        list = gson.fromJson(data, new TypeToken<List<String>>() {
-        }.getType());
-        list1 = gson.fromJson(data1, new TypeToken<List<String>>() {
-        }.getType());
+        if(!data.isEmpty()) {
+            list = gson.fromJson(data, new TypeToken<List<String>>() {
+            }.getType());
+        }
+        if (!data1.isEmpty()) {
+            list1 = gson.fromJson(data1, new TypeToken<List<String>>() {
+            }.getType());
+        }
         Log.e("aaaaaaa", list.size() + "");
         Log.e("aaaaaa", list1.size() + "");
         initView();
     }
 
-
+    //展示数据
     private void initView() {
         mRvZhuo = (RecyclerView) findViewById(R.id.rv_zhuo);
         mRvQi = (RecyclerView) findViewById(R.id.rv_qi);

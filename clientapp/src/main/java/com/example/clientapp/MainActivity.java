@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
             case R.id.bt_geng:
+                //发送更新的广播
                 Intent intent = new Intent("cn.boc.mtms.CHECK_VERSION_COMPLETE");
                 intent.putExtra("CHECK_RESULT", true);
                 intent.putExtra("CHECK_FAIL_REASON", "");
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 sendBroadcast(intent);
                 break;
             case R.id.bt_jin:
+                //发送进入/退出更新广播
                 Intent intent1 = new Intent("cn.boc.mtms.UPDATE_STATUS");
                 intent1.putExtra("UPDATE_STATUS", true);
                 intent1.putExtra("RESULT_CODE", "0");
@@ -78,16 +80,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 sendBroadcast(intent1);
                 break;
             case R.id.bt_qian:
+                //发送设备签到广播
                 Intent intent2 = new Intent("cn.boc.mtms.DEVICE_NO_SIGNIN");
                 intent2.putExtra("equip", true);
                 intent2.setComponent(new ComponentName("com.example.zhmkaohe", "com.example.zhmkaohe.app.MyReceiver"));
                 sendBroadcast(intent2);
                 break;
             case R.id.bt_green:
+                //跳转数据库页面实现增删改查
                 Intent intent3 = new Intent(MainActivity.this, Main2Activity.class);
                 startActivity(intent3);
                 break;
             case R.id.bt_list:
+                //跳转桌面应用列表展示页面
                 Intent intent4 = new Intent(MainActivity.this,Main3Activity.class);
                 startActivity(intent4);
                 break;

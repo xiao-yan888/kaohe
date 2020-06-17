@@ -19,7 +19,7 @@ public class AppInfo  {
     private Long id;
     @Transient
     public String versionName;
-    @Transient
+    @Property
     private String packageName;
     @Transient//包名
     private Drawable ico;       //图标
@@ -28,9 +28,10 @@ public class AppInfo  {
     @Property
     private String Name;        //应用标签
     private int type;//启动应用程序的Intent ，一般是Action为Main和Category为Lancher的Activity
-    @Generated(hash = 162037369)
-    public AppInfo(Long id, String Name, int type) {
+    @Generated(hash = 20007192)
+    public AppInfo(Long id, String packageName, String Name, int type) {
         this.id = id;
+        this.packageName = packageName;
         this.Name = Name;
         this.type = type;
     }

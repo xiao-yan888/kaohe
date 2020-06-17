@@ -1,5 +1,6 @@
 package com.example.zhmkaohe.bean;
 
+//获取进入/退出更新列表的bean类
 public class AppList {
     private String appName;
     private String packName;

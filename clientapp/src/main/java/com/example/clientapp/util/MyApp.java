@@ -13,6 +13,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         //DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "client.db");
+        //创建数据库
         MyOpenHelper myOpenHelper = new MyOpenHelper(this, "client.db");
         DaoMaster daoMaster = new DaoMaster(myOpenHelper.getWritableDb());
         daoSession = daoMaster.newSession();

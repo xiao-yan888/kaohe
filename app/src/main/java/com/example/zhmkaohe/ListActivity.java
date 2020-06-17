@@ -57,6 +57,7 @@ public class ListActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
+                //获取数据
                 requestData();
             }
         }.start();
@@ -93,12 +94,13 @@ public class ListActivity extends AppCompatActivity {
         mRv = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRv.setLayoutManager(linearLayoutManager);
+        //获取数据
         requestNewData();
         // requestData();
         mTv = (TextView) findViewById(R.id.tv);
     }
 
-
+    //转成json字符串
     private String toJson(InputStream inputStream) {
         StringBuilder builder = new StringBuilder();
         String string;

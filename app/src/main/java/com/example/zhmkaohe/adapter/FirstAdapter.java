@@ -49,12 +49,13 @@ public class FirstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         FirstInfo firstInfo = data.get(position);
         firstViewHolder.tv_title.setText(firstInfo.getTitle());
         firstViewHolder.tv_content.setText(firstInfo.getContent());
+        //每个条目显示1/3高
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         int heightPixels = (metrics.heightPixels) * 2 / 3;
         layoutParams1 = (LinearLayout.LayoutParams) firstViewHolder.ll_item.getLayoutParams();
         layoutParams1.height = heightPixels / 3;
         firstViewHolder.ll_item.setLayoutParams(layoutParams1);
-
+        //点击条目跳转到其他页面获取网络数据
         firstViewHolder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +64,7 @@ public class FirstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         });
         //firstViewHolder.ll_item.setLayoutParams(layoutParams1);
+        //根据type 展示不同的背景颜色
         if (firstInfo.getType() == 1) {
             firstViewHolder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.fback1));
         } else if (firstInfo.getType() == 2) {

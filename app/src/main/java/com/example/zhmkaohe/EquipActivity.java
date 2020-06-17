@@ -68,8 +68,6 @@ public class EquipActivity extends AppCompatActivity {
         list.add("空间总容量");
         list.add("当前网络状态");
         mRv = (RecyclerView) findViewById(R.id.rv);
-        //new EquipAdapter(this, date);
-        //  mRv.setAdapter(firstAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRv.setLayoutManager(linearLayoutManager);
         Intent intent = new Intent();
@@ -84,6 +82,7 @@ public class EquipActivity extends AppCompatActivity {
                     if (null != iMyAidlInterface) {
                         //...
                         try {
+                            //获取aidl传递过来的数据
                             infos = iMyAidlInterface.getInfos();
                             Log.e("ssssssss", infos.size() + "");
                             Message message = new Message();

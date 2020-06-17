@@ -52,11 +52,15 @@ public class DeskTopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         deskTopViewHolder.ll_item.setLayoutParams(layoutParams1);
         deskTopViewHolder.iv.setImageDrawable(appInfos.get(position).getIco());
         deskTopViewHolder.tv.setText(appInfos.get(position).getName());
+        //判断是否有更新
         if (appInfos.get(position).getUpdate_flag()) {
+            //true 显示
             deskTopViewHolder.tv_geng.setVisibility(View.VISIBLE);
         } else {
+            //隐藏
             deskTopViewHolder.tv_geng.setVisibility(View.GONE);
         }
+        //点击条目跳转到每个应用程序
         deskTopViewHolder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

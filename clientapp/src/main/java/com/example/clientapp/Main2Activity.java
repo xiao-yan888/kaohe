@@ -102,18 +102,23 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             default:
                 break;
             case R.id.but:
+                //添加
                 insert();
                 break;
             case R.id.select:
+                //查询
                 cha();
                 break;
             case R.id.delete:
+                //删除
                 shachu();
                 break;
             case R.id.update:
+                //修改
                 upda();
                 break;
             case R.id.all:
+                //全部删除
                 all();
                 break;
         }
@@ -132,13 +137,15 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         for (int i = 0; i < list.size(); i++) {
             Long id1 = list.get(i).getId();
             Log.d("aa", "select: " + id1);
-
+            //根据id进行更改
             if (ids == id1) {
                 //重新或许一遍值
                 String s = mName.getText().toString();
+                //判断输入的值是否为空
                 if (s.isEmpty()) {
                     Toast.makeText(Main2Activity.this, "不能为空", Toast.LENGTH_SHORT).show();
                 } else {
+                    //不为空修改更新数据库
                     DataInfo dataInfo = new DataInfo(ids, s, "21", "女", "sd","1","2","3","4","5");
                     dataInfoDao.update(dataInfo);
                     Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
@@ -164,7 +171,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             }
         }
         //dataInfoDao.queryBuilder().where(DataInfoDao.Properties.Id.eq(id)).buildDelete().executeDeleteWithoutDetachingEntities();
-
+        //查询
         cha();
     }
 
